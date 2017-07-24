@@ -41,14 +41,6 @@ void StartGate::Execute()
 void StartGate::UpdateTarget()
 {
     std::vector target(Boxes->GetNearest(START_GATE));
-    if (target.size() > 0)
-    {
-        this->MotionMessage[0] = target[0];
-        this->MotionMessage[1] = target[1];
-    }
-    else
-    {
-        this->MotionMessage[0] = 0;
-        this->MotionMessage[1] = 0; 
-    }
+    this->MotionMessage[0] = target[0];
+    this->MotionMessage[1] = target[1];
 }
