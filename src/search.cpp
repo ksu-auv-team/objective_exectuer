@@ -12,7 +12,7 @@ using namespace state;
 Search::Search(ros::Publisher& motionPub, boxes::Boxes& boxes)
     : State(motionpub, boxes), _target(-1), _targetSeenCounter(0)
 {
-    this->MotionMessage.data = [0, 0, 0, 1]; // example array for a message
+    this->MotionMessage.data = [0, 0, 0, 3]; // example array for a message
 }
 
 int Search::Execute()
@@ -42,3 +42,7 @@ int Search::Execute()
     }
 }
 
+void Search::SetTarget(int target)
+{
+    _target = target;
+}

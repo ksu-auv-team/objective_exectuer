@@ -7,7 +7,8 @@ Purpose: contains state object for going throught the start gate
 */
 #ifndef START_GATE_DEF
 #define START_GATE_DEF
-#include <state.h>
+
+#include "state.h"
 
 namespace state
 {
@@ -15,7 +16,22 @@ namespace state
 class StartGate : public State
 {
     private:
-    //TODO
+        //@var time that state starts
+        double _start;
+
+        /**
+        update the MotionMessge to reflect current start gate
+        */
+        void UpdateTarget();
+
+    public:
+        /**
+        loop for the StartGate state
+        */
+        int Execute();
+
+    StartGate(ros::Publisher &motionPub, boxes::Boxes& boxes);
+    
 };
 
 }
