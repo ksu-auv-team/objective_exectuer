@@ -57,25 +57,29 @@ bool Boxes::Contains(int object)
     return false;
 }
 
-float * GetNearest(int object)
+std::vector<float> GetNearest(int object)
 {
     int idx;
-    int err(1);
-    for (int i(0); i < _numBoxes; i++)
+    float err(100);
+    for (int i(0); i < _numBoxes; i++)//simple search
     {
         if (round(_boxes[i][0]) == object &&
-        sqrt(pow(_boxes[i][6], 2) + pow(_boxes[i][7], 2)) < err)
+        sqrt(pow(_boxes[i][6], 2) + pow(_boxes[i][7], 2)) < err) // min error
         {
             idx = i;
         }
     }
 
-    if (err < 1)
+    if (err < 100)
     {
-        return &(_boxes[idx][6]);
+        std::vector<float> centers{};
+        centers[0] = _boxes[idx][6]; //x
+        centers[1] = _boxes[idx][7]; //y
+        return centers;
     }
     else
     {
-        return &NULL;
+        std::vector<float> empty;
+        return empty;
     }
 }

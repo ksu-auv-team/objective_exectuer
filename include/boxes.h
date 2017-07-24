@@ -63,10 +63,10 @@ class Boxes
 
         @param object: int object to find the  best box for
 
-        @return center pointer to center x coordinate of a box with 
-        a certain type closest to the center. y coord is one mem aaddress over.
+        @return vector of center x, center y coordinates of closest box of type <object>.
+        returns empty if not found. 
         */
-        float * GetNearest(int object);
+        std::vector<float> GetNearest(int object);
 
 
     Boxes();

@@ -21,9 +21,6 @@ class Search : public State
         //@var _target: int for the target to find
         int _target;
 
-        //@var _targetSeenCounter: counter to make sure target seen multiple times
-        int _targetSeenCounter;
-
     public:
         /**
         Set the target to search for. Check objective_definitions.h

@@ -17,6 +17,7 @@ Search::Search(ros::Publisher& motionPub, boxes::Boxes& boxes)
 
 int Search::Execute()
 {
+    int targetSeenCounter = 0;
     if (_target == -1)
     {
         ROS_ERROR("Target not set before search");
@@ -27,11 +28,10 @@ int Search::Execute()
     {
         if (Boxes->NewBox() && Boxes->Contains(_target))// new box available, target found
         {
-            _targetSeenCounter ++;
-            if (_targetSeenCounter > 10) //sees the object more than 3 times
+            targetSeenCounter ++;
+            if (_targetSeenCounter > 3) //sees the object more than 3 times
             {
                 _target = -1; // reset target
-                _targetSeenCounter = 0; //reset counter
                 return 0; //object found, return to previous state
             }
         }
