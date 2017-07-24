@@ -12,14 +12,14 @@ using namespace state;
 StartGate::StartGate(ros::Publisher &motionPub, boxes::Boxes& boxes)
      : State::State(&motionPub, &boxes)
 {
-    MotionMessage[0] = 0;
-    MotionMessage[1] = 0;
-    MotionMessage[2] = 1;
-    MotionMessage[3] = 0;
-    MotionMessage[4] = 1;
+    MotionMessage[0] = 0;// mode 0
+    MotionMessage[1] = 0;// x
+    MotionMessage[2] = 0.762; //depth, 2.5ft/.76m down
+    MotionMessage[3] = .2; // forward motion, 1 is full forward, -1 is full reverse
+    MotionMessage[4] = 0; //lateral throttle, same as ablve
 }
 
-void StartGate::Execute()
+int StartGate::Execute()
 {
     float start(ros::Time::now().toSec());
     while(ros::ok())
@@ -41,6 +41,6 @@ void StartGate::Execute()
 void StartGate::UpdateTarget()
 {
     std::vector target(Boxes->GetNearest(START_GATE));
-    this->MotionMessage[0] = target[0];
-    this->MotionMessage[1] = target[1];
+    this->MotionMessage[0] = target[0]; //x
+    // this->MotionMessage[1] = target[1]; //y
 }

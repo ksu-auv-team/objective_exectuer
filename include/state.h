@@ -22,7 +22,7 @@ class State
         boxes::Boxes *Boxes;
 
         //@var MotionPub - publisher to be shared byall states
-        ros::Publisher *MotionPub
+        ros::Publisher *MotionPub;
 
         //@var MotionMsg - motion message to be used, generated per state
         ros::Float32MultiArray MotionMsg;

@@ -16,11 +16,8 @@ namespace state
 class StartGate : public State
 {
     private:
-        //@var time that state starts
-        double _start;
-
         /**
-        update the MotionMessge to reflect current start gate
+        update the MotionMessge to reflect current start gate position
         */
         void UpdateTarget();
 
