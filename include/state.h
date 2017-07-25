@@ -11,6 +11,7 @@ Purpose: parent class for all states.
 #include <ros/ros.h>
 #include <std_msgs/Float32MultiArray.h>
 #include "boxes.h"
+#include "objective_definitions.h" 
 
 namespace state
 {
@@ -41,7 +42,7 @@ class State
     @param motionPub - publisher for motion package
     @param boxes - boxes object to store all yolo boxes
     */
-    State(ros::Publisher &motionPub, boxes::Boxes& boxes);
+    State(ros::Publisher motionPub, boxes::Boxes boxes);
   
 };
 

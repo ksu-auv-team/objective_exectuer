@@ -29,7 +29,7 @@ class Boxes
 
         //@var boxes holding data structure
         float ** _boxes;
-        int _numBoxes;
+        int _numBoxes, _numFirstBoxes;
         bool _newBoxes;
 
         /*

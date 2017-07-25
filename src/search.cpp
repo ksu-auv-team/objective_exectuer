@@ -12,7 +12,11 @@ using namespace state;
 Search::Search(ros::Publisher& motionPub, boxes::Boxes& boxes)
     : State(motionPub, boxes), _target(-1), _targetSeenCounter(0)
 {
-    this->MotionMessage.data = [0, 0, 0, 3]; // example array for a message
+    MotionMsg.data[0] = 4;// mode 0
+    MotionMsg.data[1] = .3;// yaw
+    MotionMsg.data[2] = 0; //depth, 2.5ft/.76m down
+    MotionMsg.data[3] = 0; // forward motion, 1 is full forward, -1 is full reverse
+    MotionMsg.data[4] = 0; //lateral throttle, same as ablve
 }
 
 int Search::Execute()
@@ -36,7 +40,7 @@ int Search::Execute()
             }
         }
         //TODO: Add timer, quit with error code if object not found
-        MotionPub.publish(this->MotionMessage); //tell motion package to enter search pattern (probably spin in place)
+        MotionPub->publish(this->MotionMsg); //tell motion package to enter search pattern (probably spin in place)
         ros::spinOnce();
         this->SleepRate.sleep();
     }

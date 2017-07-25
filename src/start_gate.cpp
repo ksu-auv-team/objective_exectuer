@@ -9,14 +9,14 @@ Purpose: source file for start_gate state
 
 using namespace state;
 
-StartGate::StartGate(ros::Publisher &motionPub, boxes::Boxes& boxes)
-     : State::State(&motionPub, &boxes)
+StartGate::StartGate(ros::Publisher motionPub, boxes::Boxes boxes)
+     : State::State(motionPub, boxes)
 {
-    MotionMessage[0] = 0;// mode 0
-    MotionMessage[1] = 0;// x
-    MotionMessage[2] = 0.762; //depth, 2.5ft/.76m down
-    MotionMessage[3] = .2; // forward motion, 1 is full forward, -1 is full reverse
-    MotionMessage[4] = 0; //lateral throttle, same as ablve
+    MotionMsg.data[0] = 0;// mode 0
+    MotionMsg.data[1] = 0;// x
+    MotionMsg.data[2] = 0.762; //depth, 2.5ft/.76m down
+    MotionMsg.data[3] = .2; // forward motion, 1 is full forward, -1 is full reverse
+    MotionMsg.data[4] = 0; //lateral throttle, same as ablve
 }
 
 int StartGate::Execute()
@@ -27,7 +27,7 @@ int StartGate::Execute()
         if(Boxes->NewBox() && Boxes->Contains(START_GATE))
         {
             this->UpdateTarget();
-            MotionPub.publish(this->MotionMessage);
+            MotionPub->publish(this->MotionMsg);
         }
         if (ros::Time::now().toSec() - start > 30)
         {
@@ -40,7 +40,7 @@ int StartGate::Execute()
 
 void StartGate::UpdateTarget()
 {
-    std::vector target(Boxes->GetNearest(START_GATE));
-    this->MotionMessage[0] = target[0]; //x
-    // this->MotionMessage[1] = target[1]; //y
+    std::vector<float> target(Boxes->GetNearest(START_GATE));
+    this->MotionMsg.data[0] = target[0]; //x
+    // this->MotionMsg[1] = target[1]; //y
 }

@@ -12,8 +12,12 @@ using namespace boxes;
 Boxes::Boxes()
     : _newBoxes(false), _numBoxes(0)
 {
-    _boxesSub = _nh.Subscribe("yolo/first/boxes", 10, &Boxes::boxesCallback, this);
-    _boxes = new float[100][8];
+    _boxesSub = _nh.subscribe("yolo/first/boxes", 10, &Boxes::BoxesCallback, this);
+    _boxes = new float * [100];
+    for (int i = 0; i < 100; i++)
+    {
+        _boxes[i] = new float[8];
+    }
 }
 
 Boxes::~Boxes()
@@ -23,7 +27,7 @@ Boxes::~Boxes()
 
 void Boxes::BoxesCallback(const std_msgs::Float32MultiArray &msg)
 {
-    _numFirstBoxes = msg.layout.dim[0].shape;
+    _numFirstBoxes = msg.layout.dim[0].size;
     for (int i(0); i < _numFirstBoxes; i++)
     {
         _boxes[i][0] = msg.data[i*6]; // class
@@ -40,13 +44,13 @@ void Boxes::BoxesCallback(const std_msgs::Float32MultiArray &msg)
 
 bool Boxes::NewBox()
 {
-    _newBoxes = False;
+    _newBoxes = false;
     return _newBoxes;
 }
 
 bool Boxes::Contains(int object)
 {
-    for (int i(0); i < _numBoxes; i++)
+    for (int i(0); i < this->_numBoxes; i++)
     {
         if (round(_boxes[i][0]) == object)
         {
@@ -57,7 +61,7 @@ bool Boxes::Contains(int object)
     return false;
 }
 
-std::vector<float> GetNearest(int object)
+std::vector<float> Boxes::GetNearest(int object)
 {
     int idx;
     float err(100);
@@ -72,7 +76,7 @@ std::vector<float> GetNearest(int object)
 
     if (err < 100)
     {
-        std::vector<float> centers{};
+        std::vector<float> centers;
         centers[0] = _boxes[idx][6]; //x
         centers[1] = _boxes[idx][7]; //y
         return centers;

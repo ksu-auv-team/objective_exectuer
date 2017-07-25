@@ -135,9 +135,6 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
  add_executable(objective_executor_node src/main.cpp
                 src/boxes.cpp
-                src/dropper_finder.cpp
-                src/dropper.cpp
-                src/path_marker.cpp
                 src/search.cpp
                 src/start_gate.cpp
                 src/state.cpp)

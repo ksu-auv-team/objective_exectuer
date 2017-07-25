@@ -27,7 +27,7 @@ class StartGate : public State
         */
         int Execute();
 
-    StartGate(ros::Publisher &motionPub, boxes::Boxes& boxes);
+    StartGate(ros::Publisher motionPub, boxes::Boxes boxes);
     
 };
 
