@@ -1,21 +1,21 @@
 /**
 bouy.h
-Purpose: source file for dropper
+Purpose: source file for dropper_finder
 
 @author vnguye34
 @version 0.0.1
 */
-#include "dropper.h"
+#include "dropper_finder.h"
 
 using namespace state;
 
-Dropper::Dropper(ros::Publisher &motionPub, boxes::Boxes& boxes)
+Dropper_finder::Dropper_finder(ros::Publisher &motionPub, boxes::Boxes& boxes)
      : State::State(&motionPub, &boxes), _target(DROPPER_BIN)
 {
-    MotionMessage[0] = 1; //mode 3, dropper movement
-	MotionMessage[1] = 0; //x bottom cam
-	MotionMessage[2] = 0; //y bottom cam
-    MotionMessage[3] = 0; //forward thrust, -1, 1, forward backward
+    MotionMessage[0] = 3; //mode 3, dropper movement
+	MotionMessage[1] = 0; //x 
+	MotionMessage[2] = 0; //y 
+    MotionMessage[3] = .5; //forward thrust, -1, 1, forward backward
     MotionMessage[4] = 0; //lateral thrust, -1, 1, rolling side to side
 }
 
@@ -29,43 +29,15 @@ int Dropper::Execute()
 		switch(_target)
 		{
 			case DROPPER_BIN:
-			if (Boxes->NewBox() && Boxes->Contains(RED_BOUY)):
+			if (Boxes->NewBox() && Boxes->Contains(DROPPER_BIN)):
 			{
 				this->UpdateTarget();
 				MotionPub.publish(this->MotionMessage);
 				lastSeen = ros::Time::now().toSec();
 			}
-			else if (lastSeen > 10)
+			else if (lastSeen > 5)
 			{
-				_target = GREEN_BUOY;
-			}
-			break;
-			
-			case GREEN_BOUY:
-			lastSeen = -1;
-			if(Boxes->NewBox() && Boxes->Contains(GREEN_BOUY)):
-			{
-				this->UpdateTarget();
-				MotionPub.publish(this->MotionMessage);
-				lastSeen = ros::Time::now().toSec();
-			}
-			else if (lastSeen > 10)
-			{
-				_target = YELLOW_BOUY;
-			}
-			break;
-			
-			case YELLOW_BOUY:
-			lastSeen = -1;
-			if(Boxes->NewBox() && Boxes->Contains(YELLOW_BOUY)):
-			{
-				this->UpdateTarget();
-				MotionPub.publish(this->MotionMessage);
-				lastSeen = ros::Time::now().toSec();
-			}
-			else if (lastSeen > 10)
-			{
-				_target = PATH_MARKER;	
+				//write state transition to dropper
 			}
 			break;
         }
@@ -75,7 +47,7 @@ int Dropper::Execute()
     }
 }
 
-void Bouy::UpdateTarget()
+void Dropper::UpdateTarget()
 {
     std::vector target(Boxes->GetNearest(_target));
     this->MotionMessage[0] = target[0];
