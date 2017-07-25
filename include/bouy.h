@@ -17,7 +17,7 @@ class Bouy : public State
 {
     private:
         //@var time that state starts
-        double _start;
+		int _target;
 
         /**
         update the MotionMessge to reflect current active bouy
