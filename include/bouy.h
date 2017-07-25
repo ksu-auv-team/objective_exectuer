@@ -1,5 +1,5 @@
 /**
-start_gate.h
+bouy.h
 Purpose: contains state object for bouys
 
 @author vnguye34
