@@ -25,7 +25,7 @@ class State
         ros::Publisher *MotionPub;
 
         //@var MotionMsg - motion message to be used, generated per state
-        ros::Float32MultiArray MotionMsg;
+        std_msgs::Float32MultiArray MotionMsg;
 
         //@var SleepRate - sleep rate
         ros::Rate SleepRate;
