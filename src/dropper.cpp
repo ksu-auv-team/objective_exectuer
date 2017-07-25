@@ -12,12 +12,10 @@ using namespace state;
 Dropper::Dropper(ros::Publisher &motionPub, boxes::Boxes& boxes)
      : State::State(&motionPub, &boxes), _target(DROPPER_BIN)
 {
-    MotionMessage[3] = 1; //mode 3, dropper movement
-    MotionMessage[1] = 0; //x front cam
-    MotionMessage[2] = 0; //y front cam
-	MotionMessage[3] = 0; //x bottom cam
-	MotionMessage[4] = 0; //y bottom cam
-    MotionMessage[3] = .5; //forward thrust, -1, 1, forward backward
+    MotionMessage[0] = 1; //mode 3, dropper movement
+	MotionMessage[1] = 0; //x bottom cam
+	MotionMessage[2] = 0; //y bottom cam
+    MotionMessage[3] = 0; //forward thrust, -1, 1, forward backward
     MotionMessage[4] = 0; //lateral thrust, -1, 1, rolling side to side
 }
 
