@@ -1,19 +1,19 @@
 /**
 dropper.h
-Purpose: contains state object for dropper
+Purpose: contains state object for dropper_finder
 
 @author vnguye34
 @version 0.0.1
 */
-#ifndef DROPPER_DEF
-#define DROPPER_DEF
+#ifndef DROPPER_FINDER_DEF
+#define DROPPER_FINDER_DEF
 
 #include "state.h"
 
 namespace state
 {
 
-class Dropper : public State
+class Dropper_finder : public State
 {
     private:
         //@var time that state starts
