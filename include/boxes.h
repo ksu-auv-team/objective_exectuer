@@ -7,6 +7,7 @@ Purpose: class to manage active boxes
 */
 #ifndef BOXES_DEF
 #define BOXES_DEF
+
 #include <ros/ros.h>
 #include <std_msgs/Float32MultiArray.h>
 #include <vector>
@@ -18,18 +19,18 @@ namespace boxes
 class Boxes
 {
     private:
+        //@var max number of boxes
+        const int MAX_BOXES;
+
         //@var nodehandle for boxes subscriber
         ros::NodeHandle _nh;
 
         //@var subscriber to yolo boxes for first cam
         ros::Subscriber _boxesSub;
 
-        //@var subscriber for second camera boxes
-        ros::Subscriber _secondBoxesSub;
-
         //@var boxes holding data structure
         float ** _boxes;
-        int _numBoxes, _numFirstBoxes;
+        int _numBoxes;
         bool _newBoxes;
 
         /*
@@ -67,6 +68,11 @@ class Boxes
         returns empty if not found. 
         */
         std::vector<float> GetNearest(int object);
+
+        /**
+        prints all current boxes with ros_info
+        */
+        void PrintBoxes();
 
 
     Boxes();

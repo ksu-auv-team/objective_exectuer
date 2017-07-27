@@ -9,11 +9,21 @@ Purpose: source file for parent state class
 
 using namespace state;
 
-State::State(ros::Publisher motionPub, boxes::Boxes boxes)
+State::State(ros::Publisher *motionPub, boxes::Boxes *boxes)
     : SleepRate(20)
 {
-    Boxes = &boxes;
+    ros::Time::init();
 
-    MotionPub = &motionPub;
+    Boxes = boxes;
+
+    MotionPub = motionPub;
 
 }
+
+// int State::Execute()
+// {
+//     while(ros::ok())
+//     {
+//         ROS_INFO("This is supposed to be an abstract class");
+//     }
+// }

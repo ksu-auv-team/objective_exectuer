@@ -9,7 +9,7 @@ Purpose: source file for search state
 
 using namespace state;
 
-Search::Search(ros::Publisher& motionPub, boxes::Boxes& boxes)
+Search::Search(ros::Publisher * motionPub, boxes::Boxes *boxes)
     : State(motionPub, boxes), _target(-1), _targetSeenCounter(0)
 {
     MotionMsg.data[0] = 4;// mode 0

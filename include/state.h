@@ -42,7 +42,7 @@ class State
     @param motionPub - publisher for motion package
     @param boxes - boxes object to store all yolo boxes
     */
-    State(ros::Publisher motionPub, boxes::Boxes boxes);
+    State(ros::Publisher *motionPub, boxes::Boxes *boxes);
   
 };
 

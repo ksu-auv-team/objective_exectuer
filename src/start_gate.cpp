@@ -9,19 +9,21 @@ Purpose: source file for start_gate state
 
 using namespace state;
 
-StartGate::StartGate(ros::Publisher motionPub, boxes::Boxes boxes)
+StartGate::StartGate(ros::Publisher *motionPub, boxes::Boxes *boxes)
      : State::State(motionPub, boxes)
 {
-    MotionMsg.data[0] = 0;// mode 0
-    MotionMsg.data[1] = 0;// x
-    MotionMsg.data[2] = 0.762; //depth, 2.5ft/.76m down
-    MotionMsg.data[3] = .2; // forward motion, 1 is full forward, -1 is full reverse
-    MotionMsg.data[4] = 0; //lateral throttle, same as ablve
+    MotionMsg.data = {0, 0, 0.762, .5, 0};
+    // MotionMsg.data[0] = 0;// mode 0
+    // MotionMsg.data[1] = 0;// x
+    // MotionMsg.data[2] = 0.762; //depth, 2.5ft/.76m down
+    // MotionMsg.data[3] = .2; // forward motion, 1 is full forward, -1 is full reverse
+    // MotionMsg.data[4] = 0; //lateral throttle, same as ablve
 }
 
 int StartGate::Execute()
 {
     float start(ros::Time::now().toSec());
+    ROS_INFO("START : %f", start);
     while(ros::ok())
     {
         if(Boxes->NewBox() && Boxes->Contains(START_GATE))
@@ -31,7 +33,9 @@ int StartGate::Execute()
         }
         if (ros::Time::now().toSec() - start > 30)
         {
-            break; //TODO enter disarm state?
+            ROS_INFO("%d", ros::Time::now().toSec() - start);
+            ROS_INFO("StartGate Timeout!! :D");
+            return 0;//timeout //TODO enter disarm state?
         }
         ros::spinOnce();
         SleepRate.sleep();
@@ -41,6 +45,6 @@ int StartGate::Execute()
 void StartGate::UpdateTarget()
 {
     std::vector<float> target(Boxes->GetNearest(START_GATE));
-    this->MotionMsg.data[0] = target[0]; //x
+    this->MotionMsg.data[1] = target[0]; //x
     // this->MotionMsg[1] = target[1]; //y
 }

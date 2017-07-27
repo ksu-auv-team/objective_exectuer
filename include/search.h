@@ -36,7 +36,7 @@ class Search : public State
         int Execute();
 
 
-    Search(ros::Publisher&, boxes::Boxes&);
+    Search(ros::Publisher*, boxes::Boxes*);
 
 };
 

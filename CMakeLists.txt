@@ -135,9 +135,9 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
  add_executable(objective_executor_node src/main.cpp
                 src/boxes.cpp
+                src/state.cpp
                 src/search.cpp
-                src/start_gate.cpp
-                src/state.cpp)
+                src/start_gate.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

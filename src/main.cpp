@@ -19,7 +19,7 @@ int main(int argc, char ** argv)
 
     boxes::Boxes boxes;
 
-    auto startGate = new state::StartGate(motionPub, boxes);
+    auto startGate = new state::StartGate(&motionPub, &boxes);
 
     startGate->Execute();
 }

@@ -7,15 +7,15 @@ Purpose: provide common definitions tobe used with objects
 #ifndef OBJECTIVE_DEFINITIONS
 #define OBJECTIVE_DEFINITIONS
 
-#define START_GATE      0
+#define START_GATE      1
 
-#define PATH_MARKER     1
+#define PATH_MARKER     2
 
-#define RED_BUOY        2
-#define GREEN_BUOY      3
-#define YELLOW_BUOY     4
+#define RED_BUOY        3
+#define GREEN_BUOY      4
+#define YELLOW_BUOY     5
 
-#define CHANNEL         5
+#define CHANNEL         -123
 
 #define DROPPER_BIN     6
 #define DROPPER_HANDLE  7
