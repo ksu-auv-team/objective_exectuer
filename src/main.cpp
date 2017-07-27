@@ -8,8 +8,6 @@ Purpose: main function to run the state machine for objective executions
 #include <ros/ros.h>
 #include <ros/console.h>
 #include "boxes.h"
-#include "state.h"
-#include "search.h"
 #include "start_gate.h"
 
 int main(int argc, char ** argv)
@@ -21,8 +19,7 @@ int main(int argc, char ** argv)
 
     boxes::Boxes boxes;
 
-    state::Search searchState(motionPub, boxes);
-    ROS_INFO("Node Start.");
+    auto startGate = new state::StartGate(motionPub, boxes);
 
-    //auto startGate = new StartGate::StartGate();
+    startGate->Execute();
 }
