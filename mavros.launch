@@ -1,0 +1,4 @@
+<launch>
+	<!--START PIXHAWK-->
+	<include file="$(find mavros)/launch/apm2.launch"/>
+</launch>

@@ -1,0 +1,3 @@
+<launch>
+	<node name="movement_package_program" pkg="movement_package" type="ai_control_node" output="screen"/>
+</launch>

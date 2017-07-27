@@ -1,0 +1,4 @@
+<launch>
+	<node name="objective_executor_program" pkg="objective_executer" type="objective_executor_node" output="screen"/>
+</launch>
+
