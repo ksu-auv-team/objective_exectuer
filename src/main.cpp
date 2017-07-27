@@ -15,7 +15,7 @@ int main(int argc, char ** argv)
     ros::init(argc, argv, "objective_executor");
 
     ros::NodeHandle nh;
-    ros::Publisher motionPub = nh.advertise<std_msgs::Float32MultiArray>("chatter", 1000);
+    ros::Publisher motionPub = nh.advertise<std_msgs::Float32MultiArray>("pi_loop_data", 1000);
 
     boxes::Boxes boxes;
 

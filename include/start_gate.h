@@ -16,6 +16,8 @@ namespace state
 class StartGate : public State
 {
     private:
+        const int TIMEOUT;
+        float _startTime;
         /**
         update the MotionMessge to reflect current start gate position
         */

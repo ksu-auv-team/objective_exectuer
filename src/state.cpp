@@ -12,8 +12,6 @@ using namespace state;
 State::State(ros::Publisher *motionPub, boxes::Boxes *boxes)
     : SleepRate(20)
 {
-    ros::Time::init();
-
     Boxes = boxes;
 
     MotionPub = motionPub;

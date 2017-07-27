@@ -10,9 +10,15 @@ Purpose: source file for start_gate state
 using namespace state;
 
 StartGate::StartGate(ros::Publisher *motionPub, boxes::Boxes *boxes)
-     : State::State(motionPub, boxes)
+     : State::State(motionPub, boxes), TIMEOUT(30)
 {
-    MotionMsg.data = {0, 0, 0.762, .5, 0};
+    _startTime = ros::Time::now().toSec();
+    while (round(_startTime) == 0)
+    {
+        ros::Duration(0.5).sleep();
+        _startTime = ros::Time::now().toSec();
+    }
+    // MotionMsg.data = {0, 0, 0.762, .5, 0};
     // MotionMsg.data[0] = 0;// mode 0
     // MotionMsg.data[1] = 0;// x
     // MotionMsg.data[2] = 0.762; //depth, 2.5ft/.76m down
@@ -22,21 +28,16 @@ StartGate::StartGate(ros::Publisher *motionPub, boxes::Boxes *boxes)
 
 int StartGate::Execute()
 {
-    float start(ros::Time::now().toSec());
-    ROS_INFO("START : %f", start);
     while(ros::ok())
     {
-        if(Boxes->NewBox() && Boxes->Contains(START_GATE))
-        {
-            this->UpdateTarget();
-            MotionPub->publish(this->MotionMsg);
-        }
-        if (ros::Time::now().toSec() - start > 30)
-        {
-            ROS_INFO("%d", ros::Time::now().toSec() - start);
-            ROS_INFO("StartGate Timeout!! :D");
-            return 0;//timeout //TODO enter disarm state?
-        }
+        // if(Boxes->NewBox() && Boxes->Contains(START_GATE))
+        // {
+        //     this->UpdateTarget();
+        //     MotionPub->publish(this->MotionMsg);
+        // }
+        this->UpdateTarget();
+        MotionPub->publish(this->MotionMsg);
+        ROS_INFO("%f", MotionMsg.data[0]);
         ros::spinOnce();
         SleepRate.sleep();
     }
@@ -44,7 +45,17 @@ int StartGate::Execute()
 
 void StartGate::UpdateTarget()
 {
-    std::vector<float> target(Boxes->GetNearest(START_GATE));
-    this->MotionMsg.data[1] = target[0]; //x
-    // this->MotionMsg[1] = target[1]; //y
+    // std::vector<float> target(Boxes->GetNearest(START_GATE));
+    // this->MotionMsg.data[1] = target[0]; //x
+    // // this->MotionMsg[1] = target[1]; //y
+    MotionMsg.data.clear();
+    MotionMsg.data.push_back(5);
+    MotionMsg.data.push_back(0.762);//full speed ahead, 2.5ft down
+    float time = ros::Time::now().toSec();
+    if (round(time) !=0)
+    if ((time - _startTime) > TIMEOUT)
+    {
+        MotionMsg.data.clear();
+        MotionMsg.data.push_back(0);
+    }
 }
